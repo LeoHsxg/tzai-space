@@ -2,7 +2,7 @@
   /* margin: 35px; */
   width: 100%;
   box-sizing: border-box;
-  padding: 35px 38px 35px 42px;
+  padding: 0 38px 35px 42px;
 
   display: flex;
   flex-direction: column;
@@ -11,11 +11,10 @@
 .topic {
   text-align: center; /* 置中對齊 */
   color: rgba(0, 0, 0, 0.8);
-  font-size: 1.5em;
   font-family: "Noto Sans TC", sans-serif;
   font-weight: 700;
   word-wrap: break-word;
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
 }
 
 .content {

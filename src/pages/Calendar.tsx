@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 // import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { DateCalendar } from "@mui/x-date-pickers";
-import Reserve from "./Reserve";
-import MyDialog from "./MyDialog";
+import Reserve from "../Components/Reserve";
+import MyDialog from "../Components/MyDialog";
 import "../styles/Calendar.css";
 
 const Calendar: React.FC = () => {

@@ -16,15 +16,29 @@ interface MyDialogProps {
 const MyDialog: React.FC<MyDialogProps> = ({ open, onClose, title, content }) => {
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>{title}</DialogTitle>
+      <DialogTitle>
+        <span className="font-bold text-black/80">{title}</span>
+      </DialogTitle>
       <DialogContent>
         <DialogContentText className="space-y-0.5">
-          <div>姓名 陳小遙</div>
-          <div>郵件 testtesttesttest@gmail.com</div>
-          <div>人數 {content}</div>
-          <div>起始 2024/08/15 09:00 PM</div>
-          <div>結束 2024/08/15 09:00 PM</div>
-          <div>簡述 巴巴拉拉小魔仙子你好哈密瓜巴巴拉拉小魔仙子你好哈密瓜巴巴拉拉小魔仙子你好哈密瓜</div>
+          <div>
+            <span className="font-bold">姓名</span> &nbsp;陳小遙
+          </div>
+          <div>
+            <span className="font-bold">郵件</span> &nbsp;testtesttesttest@gmail.com
+          </div>
+          <div>
+            <span className="font-bold">人數</span> &nbsp;{content}
+          </div>
+          <div>
+            <span className="font-bold">起始</span> &nbsp;2024/08/15 09:00 PM
+          </div>
+          <div>
+            <span className="font-bold">結束</span> &nbsp;2024/08/15 09:00 PM
+          </div>
+          <div>
+            <span className="font-bold">簡述</span> &nbsp;巴巴拉拉小魔仙子你好哈密瓜巴巴拉拉小魔仙子你好哈密瓜巴巴拉拉小魔仙子你好哈密瓜
+          </div>
         </DialogContentText>
       </DialogContent>
       <DialogActions>

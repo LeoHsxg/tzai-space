@@ -4,7 +4,7 @@ import { InputLabel, MenuItem, FormControl, Select } from "@mui/material";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 import "../styles/ApplyForm.css";
-import ConsentCheckbox from "./ConsentCheckbox";
+import ConsentCheckbox from "../Components/ConsentCheckbox";
 
 const ApplyForm: React.FC = () => {
   const [startDate, setStartDate] = React.useState<Dayjs | null>(dayjs());
@@ -17,7 +17,7 @@ const ApplyForm: React.FC = () => {
 
   return (
     <div className="pt-[75px] pb-[120px] w-9/12 m-auto max-w-[400px] ">
-      <div className="text-center text-black/80 text-3xl font-noto font-bold break-words mt-8 mb-6">仁齋空間借用表單</div>
+      <div className="text-center text-black/80 text-2xl font-noto font-bold break-words mt-6 mb-4">仁齋空間借用表單</div>
       <Box component="form" onSubmit={handleSubmit} className="gap-5 flex flex-col justify-center items-center">
         <TextField className="custom-textfield" label="申請人姓名" variant="outlined" fullWidth />
         <div className="flex justify-between w-full gap-3">
@@ -52,6 +52,7 @@ const ApplyForm: React.FC = () => {
           fullWidth
           size="large"
           sx={{
+            marginTop: "5px",
             backgroundColor: "#FFD81E",
           }}>
           確認送出
