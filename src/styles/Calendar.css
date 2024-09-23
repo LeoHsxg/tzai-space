@@ -1,0 +1,18 @@
+.font {
+  color: rgba(0, 0, 0, 0.6);
+  font-family: Inter;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1rem;
+}   
+
+.cal {
+    /* max-height:  !important; */
+    /* max-height: 200px !important;
+    width: 50% !important;
+    height: 50% !important; */
+}
+
+.fuck {
+    /* flex-shrink: 0 !important; */
+}

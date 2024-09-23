@@ -11,16 +11,16 @@ const Footer = () => {
     <div className="footer">
       <div className="footer_bar">
         <div className="box">
-          <img src={Contract} alt="Contract" width="40" height="40" />
-          <img src={Calendar_month} alt="Calendar_month" width="40" height="40" />
+          <img src={Info} alt="Contract" className="icon" />
+          <img src={Calendar_month} alt="Calendar_month" className="icon" />
         </div>
         <div className="box">
-          <img src={Info} alt="Info" width="40" height="40" />
-          <img src={Settings} alt="Settings" width="40" height="40" />
+          <img src={Contract} alt="Info" className="icon" />
+          <img src={Settings} alt="Settings" className="icon" />
         </div>
       </div>
-      <div className="btn">
-        <div className="circle" />
+      <div className="btn frame">
+        <div className="circle frame" />
         <svg className="cross" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
           <rect y="11" width="25" height="3" fill="white" />
           <rect x="14" width="25" height="3" transform="rotate(90 14 0)" fill="white" />

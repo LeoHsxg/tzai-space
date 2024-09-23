@@ -1,0 +1,34 @@
+.custom-textfield {
+  background-color: #fff; /* 白底 */
+}
+
+.custom-textfield .MuiOutlinedInput-root {
+  border-radius: 12px; /* 強化圓角 */
+  border-color: rgba(0, 0, 0, 0.23); /* 默認邊框顏色 */
+}
+
+.custom-textfield .MuiOutlinedInput-root.Mui-focused fieldset {
+  border-width: 1px;
+  border-color: #ff9800; /* 選中後變為警告顏色 */
+}
+
+.custom-textfield .MuiInputLabel-root.Mui-focused {
+    border-width: 1px;
+  color: #ff9800; /* 選中後標籤變為橘色 */
+}
+
+.custom-form-control .MuiInputBase-root {
+  border-radius: 12px; /* 強化圓角 */
+}
+
+.MuiInputBase-root {
+  border-radius: 12px; /* 強化圓角 */
+}
+
+.MuiSelect-select {
+    border-radius: 12px; /* 強化圓角 */
+}
+
+.myBtn {
+    margin-top: 30px;
+}

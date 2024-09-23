@@ -1,10 +1,11 @@
 import React from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import Calendar from "./Components/Calendar";
 import NavBar from "./Components/NavBar";
 import Footer from "./Components/Footer";
-import Rule from "./Components/Rule";
+// import Calendar from "./Components/Calendar";
+import ApplyForm from "./Components/ApplyForm";
+// import Rule from "./Components/Rule";
 import "./App.css";
 
 const App: React.FC = () => {
@@ -20,8 +21,9 @@ const App: React.FC = () => {
     <div style={backgroundStyle}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <NavBar />
-        <Calendar />
+        {/* <Calendar /> */}
         {/* <Rule /> */}
+        <ApplyForm />
         <Footer />
       </LocalizationProvider>
     </div>
