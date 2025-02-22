@@ -4,7 +4,7 @@ interface ReserveProps {
   onClick: () => void;
 }
 
-const Reserve: React.FC<ReserveProps> = ({ onClick }) => {
+const Reserve = ({ onClick }: ReserveProps) => {
   return (
     <div className="w-full h-12 px-2.5 justify-start items-center gap-[15px] inline-flex">
       <div className="w-4 h-4 bg-[#ffd81e] rounded-full border-white" style={{ aspectRatio: "1 / 1" }} />

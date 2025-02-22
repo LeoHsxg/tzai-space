@@ -18,8 +18,8 @@ const App: React.FC = () => {
           <NavBar />
           <Routes>
             <Route path="/" element={<Calendar />} />
-            <Route path="/rule" element={<Rule />} />
             <Route path="/apply" element={<ApplyForm />} />
+            <Route path="/rule" element={<Rule />} />
           </Routes>
           <Footer />
         </Router>
