@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 // import Contract from "/src/img/contract.svg";
-import Calendar_month from "../img/calendar_month.svg";
-import Contract from "../img/contract.svg";
-import Info from "../img/info.svg";
-import Settings from "../img/settings.svg";
+import Calendar_month from "../img/calendar_month_h.svg";
+import Contract from "../img/contract_h.svg";
+import Info from "../img/info_h.svg";
+import Settings from "../img/settings_h.svg";
 import "../styles/Footer.css";
 
 const Footer = () => {
