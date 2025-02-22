@@ -9,19 +9,10 @@ import Calendar from "./pages/Calendar";
 import ApplyForm from "./pages/ApplyForm";
 import Rule from "./pages/Rule";
 import "./App.css";
-import BgGrid from "./img/grid.svg";
 
 const App: React.FC = () => {
-  const backgroundStyle = {
-    backgroundImage: `url(${BgGrid})`,
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-    height: "100vh",
-    zIndex: -1,
-  };
-
   return (
-    <div style={backgroundStyle}>
+    <div className="bg-[#F3F3F3] relative">
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Router>
           <NavBar />

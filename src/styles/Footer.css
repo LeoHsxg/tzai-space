@@ -8,8 +8,8 @@
 .footer_bar {
   display: flex;
   width: 100%;
-  height: 72px;
-  padding: 17px 34px;
+  height: 60px;
+  padding: 12px 40px;
   justify-content: space-between;
   box-sizing: border-box; /* 確保 padding 不影響 100% 的寬度 */
   align-items: center;
@@ -17,53 +17,26 @@
   flex-shrink: 0;
 
   background: #fff;
-  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.001);
 }
 
 .box {
+  width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 30px;
 }
 
-.icon {
+.icon_h {
   width: 35px;
   height: 35px;
+  opacity: 0.36;
 }
 
-.frame {
-  width: 72px; /* 確保容器有適當的寬度 */
-  height: 72px; /* 確保容器有適當的高度 */
+.icon_s {
+  width: 35px;
+  height: 35px;
+  opacity: 1;
 }
 
-.btn {
-  position: fixed;
-  bottom: 20px;
-  left: 0;
-  left: 50%;
-  transform: translateX(-50%);
-
-  
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.circle {
-  left: 0;
-  top: 0;
-  position: absolute;
-  background: #00bbff;
-  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.25) inset;
-  filter: drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.15));
-  border-radius: 9999px;
-  border: 4px solid white;
-
-  box-sizing: border-box; /* 確保 padding 不影響 100% 的寬度 */
-}
-
-.cross {
-  z-index: 1001;
-  filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
-}

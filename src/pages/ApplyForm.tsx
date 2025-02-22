@@ -16,7 +16,7 @@ const ApplyForm: React.FC = () => {
   };
 
   return (
-    <div className="pt-[75px] pb-[120px] w-9/12 m-auto max-w-[400px] ">
+    <div className="pt-[90px] pb-[120px] w-9/12 m-auto max-w-[400px] ">
       <div className="text-center text-black/80 text-2xl font-noto font-bold break-words mt-6 mb-4">仁齋空間借用表單</div>
       <Box component="form" onSubmit={handleSubmit} className="gap-5 flex flex-col justify-center items-center">
         <TextField className="custom-textfield" label="申請人姓名" variant="outlined" fullWidth />

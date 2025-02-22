@@ -19,7 +19,7 @@ const Calendar: React.FC = () => {
   };
 
   return (
-    <div className="pt-[75px] pb-[75px] w-full flex flex-col justify-center items-center">
+    <div className="pt-[90px] pb-[75px] w-full flex flex-col justify-center items-center">
       <div className="fuck">
         <DateCalendar className="cal bg-white rounded-lg" value={value} onChange={newValue => setValue(newValue)} />
       </div>
