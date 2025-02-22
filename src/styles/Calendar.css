@@ -6,13 +6,40 @@
   line-height: 1rem;
 }   
 
-.cal {
-    /* max-height:  !important; */
-    /* max-height: 200px !important;
-    width: 50% !important;
-    height: 50% !important; */
+.calendarDiv{
+
 }
 
 .fuck {
     /* flex-shrink: 0 !important; */
 }
+
+/* .MuiDateCalendar-root {
+  width: 100%;
+  margin: 0;
+  background-color: white;
+  border-radius: 0.75rem;
+} */
+
+/* .MuiCalendarOrClockPicker-root,
+.MuiCalendarOrClockPicker-root > div {
+  width: 290px;
+}
+.MuiCalendarPicker-root {
+  width: 250px;
+}
+.MuiCalendarPicker-root > div:first-child {
+  padding-left: 12px;
+  padding-right: 8px;
+  margin-bottom: 0px;
+}
+.MuiCalendarPicker-root > div:first-child > div:last-child > div {
+  width: 4px;
+}
+.PrivatePickersSlideTransition-root {
+  min-height: 230px;
+}
+button.MuiPickersDay-root.Mui-selected {
+  width: 35px;
+  height: 31px;
+} */

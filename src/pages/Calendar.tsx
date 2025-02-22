@@ -19,17 +19,19 @@ const Calendar: React.FC = () => {
   };
 
   return (
-    <div className="pt-[90px] pb-[75px] w-full flex flex-col justify-center items-center">
-      <div className="fuck">
-        <DateCalendar className="cal bg-white rounded-lg" value={value} onChange={newValue => setValue(newValue)} />
+    <div className="w-full">
+      <div className="calendarDiv w-full py-0 px-[10%]">
+        <DateCalendar sx={{ width: "100%" }} className="w-full m-0 bg-white rounded-xl" value={value} onChange={newValue => setValue(newValue)} />
       </div>
       {/* <DateTimePicker defaultValue={dayjs("2024-08-15T21:00")} /> */}
-      <div className="test w-10/12 flex-col justify-center items-center inline-flex">
+      <div className="test w-full py-4 px-[8%] flex-col justify-center items-center inline-flex">
         <div className="self-stretch px-2.5 justify-between items-center inline-flex">
           <div className="font">今日預約共 8 筆</div>
           <div className="font">歪比歪比巴卜</div>
         </div>
-        <div className="self-stretch h-[365px] py-2.5 flex-col justify-start items-center gap-3.5 flex">
+        <div className="self-stretch py-2.5 flex-col justify-start items-center gap-3.5 flex">
+          <Reserve onClick={handleClickOpen} />
+          <Reserve onClick={handleClickOpen} />
           <Reserve onClick={handleClickOpen} />
           <Reserve onClick={handleClickOpen} />
           <Reserve onClick={handleClickOpen} />

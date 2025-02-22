@@ -1,7 +1,7 @@
 import React from "react";
 import SignBt from "./SignBt";
-import "../styles/NavBar.css";
 import Logo from "../img/LOGO_9x3.svg";
+import "../styles/NavBar.css";
 
 const NavBar = () => {
   return (
