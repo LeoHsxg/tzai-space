@@ -3,8 +3,8 @@ import "../styles/Rule.css";
 
 const Rule = () => {
   return (
-    <div className="pt-[90px] pb-[75px]">
-      <p className="topic text-2xl mt-6 mb-4">空間借用條例</p>
+    <div className="h_adjust">
+      <p className="topic text-2xl mb-4">空間借用條例</p>
       <div className="rule">
         <div className="content">1. 小導外層玻璃門自由開關、內層防火門須保持常開， 違者立即取消借用及往後借用資格</div>
         <div className="content">2. 若要取消預約請大家在收到的mail點選「取消預約」。</div>

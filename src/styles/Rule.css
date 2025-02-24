@@ -1,3 +1,7 @@
+.h_adjust {
+  min-height: 100vh - 60px;
+}
+
 .rule {
   /* margin: 35px; */
   width: 100%;

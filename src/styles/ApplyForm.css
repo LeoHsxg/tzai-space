@@ -1,3 +1,7 @@
+.h_adjust {
+  height: 100% - 60px;
+}
+
 .ipt .MuiFilledInput-root{
   border-radius: 12px;
   border-color: none;
