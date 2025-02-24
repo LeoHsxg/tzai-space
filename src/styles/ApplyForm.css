@@ -26,13 +26,13 @@
 
 /* 輸入的格式 */
 .MuiInputBase-input {
-  font-weight: 700 !important;
+  font-weight: 600 !important;
   color: rgba(0, 0, 0, 0.6) !important;
 }
 
 /* 標籤的格式 */
 .MuiInputLabel-root {
-  font-weight: 700 !important;
+  font-weight: 600 !important;
   color: rgba(0, 0, 0, 0.25) !important;
 }
 

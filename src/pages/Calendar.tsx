@@ -19,7 +19,7 @@ const Calendar: React.FC = () => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full pb-16">
       <div className="calendarDiv w-full py-0 px-[10%]">
         <DateCalendar sx={{ width: "100%" }} className="w-full m-0 bg-white rounded-xl" value={value} onChange={newValue => setValue(newValue)} />
       </div>
