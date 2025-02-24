@@ -12,7 +12,7 @@ import "./App.css";
 
 const App: React.FC = () => {
   return (
-    <div className="bg-[#F3F3F3] relative">
+    <div className="bg-[#F3F3F3] relative h-screen">
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Router>
           <NavBar />

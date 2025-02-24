@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "../styles/ConsentCheckbox.css";
 
 const ConsentCheckbox: React.FC = () => {
@@ -18,10 +19,11 @@ const ConsentCheckbox: React.FC = () => {
           </svg>
         )}
       </label>
-      {/* <div className="small-circle" /> */}
       <span className="text-black/60 text-xs font-normal font-['Inter']">
         本人已詳閱、瞭解並願意遵守
-        <span className="underline">空間借用條例</span>
+        <Link to="/rule">
+          <span className="underline">空間借用條例</span>
+        </Link>
       </span>
     </div>
   );

@@ -1,6 +1,7 @@
 import React from "react";
-import { TextField, Button, Box } from "@mui/material";
-import { InputLabel, MenuItem, FormControl, Select } from "@mui/material";
+import { Button, Box, MenuItem, FormControl, Select } from "@mui/material";
+import InputLabel from "@mui/material/InputLabel";
+import TextField, { TextFieldProps } from "@mui/material/TextField";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 import ConsentCheckbox from "../Components/ConsentCheckbox";
@@ -16,44 +17,56 @@ const ApplyForm: React.FC = () => {
   };
 
   return (
-    <div className="px-[5%] pb-[120px] w-full">
-      <Box component="form" onSubmit={handleSubmit} className="gap-5 flex flex-col justify-center items-center">
-        <TextField className="custom-textfield" label="申請人姓名" variant="outlined" fullWidth />
-        <div className="flex justify-between w-full gap-3">
-          <TextField className="custom-textfield" label="人數" variant="outlined" fullWidth />
-          <TextField className="custom-textfield" label="手機號碼" variant="outlined" fullWidth />
+    <div className="pt-[5px] px-[5%] pb-[120px] w-full">
+      <Box component="form" onSubmit={handleSubmit} className="gap-[25px] flex flex-col justify-center items-center">
+        <div className="w-full">
+          {/* <input type="text" className="ipt" label="申請人姓名"></input> */}
+          <TextField className="ipt" placeholder="申請人姓名" variant="outlined" sx={{ bgcolor: "white" }} fullWidth />
         </div>
-        <FormControl className="custom-textfield" fullWidth>
-          <InputLabel>借用地點</InputLabel>
-          <Select labelId="demo-simple-select-label" label="借用地點">
-            <MenuItem value={10}>小導師室</MenuItem>
-            <MenuItem value={20}>書房</MenuItem>
-            <MenuItem value={30}>橘廳</MenuItem>
-            <MenuItem value={30}>會議室</MenuItem>
-            <MenuItem value={30}>貢丸室</MenuItem>
-          </Select>
-        </FormControl>
-        <div className="flex justify-between w-full gap-3">
-          <DateTimePicker className="custom-textfield" label="開始日期" value={startDate} onChange={newValue => setStartDate(newValue)} />
-          <DateTimePicker className="custom-textfield" label="結束日期" value={endDate} onChange={newValue => setEndDate(newValue)} />
+        <div className="flex justify-between w-full">
+          <TextField className="ipt" placeholder="手機號碼" variant="outlined" fullWidth />
         </div>
-        <TextField className="custom-textfield" label="活動簡述" variant="outlined" fullWidth />
+        <div className="w-full justify-between flex gap-4">
+          <TextField className="ipt" placeholder="人數" variant="outlined" />
+          <FormControl className="ipt" fullWidth>
+            <InputLabel>借用地點</InputLabel>
+            <Select labelId="demo-simple-select-label" placeholder="借用地點">
+              <MenuItem value={10}>小導師室</MenuItem>
+              <MenuItem value={20}>書房</MenuItem>
+              <MenuItem value={30}>橘廳</MenuItem>
+              <MenuItem value={30}>會議室</MenuItem>
+              <MenuItem value={30}>貢丸室</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
+        <div className="w-full">
+          <DateTimePicker
+            className="ipt w-full"
+            label="開始日期"
+            value={startDate}
+            views={["month", "day", "hours", "minutes"]}
+            onChange={newValue => setStartDate(newValue)}
+          />
+        </div>
+        <div className="flex justify-between w-full">
+          <DateTimePicker
+            className="ipt w-full"
+            label="結束日期"
+            value={endDate}
+            views={["month", "day", "hours", "minutes"]}
+            onChange={newValue => setEndDate(newValue)}
+          />
+        </div>
+        <div className="w-full">
+          <TextField className="ipt" placeholder="活動簡述（請認真寫！）" variant="outlined" fullWidth />
+        </div>
       </Box>
       <div className="mt-[20px] flex flex-col justify-center items-center">
         {/* <div className="w-9/12 flex gap-1">
           <div>請確認您已詳閱空間借用條例</div>
         </div> */}
         <ConsentCheckbox />
-        <Button
-          className=""
-          type="submit"
-          variant="contained"
-          fullWidth
-          size="large"
-          sx={{
-            marginTop: "5px",
-            backgroundColor: "#FFD81E",
-          }}>
+        <Button className="myBtn" type="submit" variant="contained" fullWidth size="large">
           確認送出
         </Button>
       </div>

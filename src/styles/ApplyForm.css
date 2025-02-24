@@ -1,23 +1,53 @@
-.custom-textfield {
-  background-color: #fff; /* 白底 */
+.ipt .MuiFilledInput-root{
+  border-radius: 12px;
+  border-color: none;
 }
 
-.custom-textfield .MuiOutlinedInput-root {
-  border-radius: 12px; /* 強化圓角 */
-  border-color: rgba(0, 0, 0, 0.23); /* 默認邊框顏色 */
+.ipt {
+  border-radius: 12px;  
+  background-color: #fff;
+  border: none;
 }
 
-.custom-textfield .MuiOutlinedInput-root.Mui-focused fieldset {
+.ipt .MuiOutlinedInput-notchedOutline {
+  border-radius: 12px;
+  border: none;
+}
+
+.ipt .MuiOutlinedInput-root {
+  border-radius: 12px;
+  border-width: 0px;
+  border-color: none;
+}
+
+/* 輸入的格式 */
+.MuiInputBase-input {
+  font-weight: 700 !important;
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+/* 標籤的格式 */
+.MuiInputLabel-root {
+  font-weight: 700 !important;
+  color: rgba(0, 0, 0, 0.25) !important;
+}
+
+/* 下拉選單的 Paper */
+.MuiPaper-root {
+  border-radius: 6px !important;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2) !important;
+}
+
+.ipt .MuiOutlinedInput-root.Mui-focused fieldset {
   border-width: 1px;
-  border-color: #ff9800; /* 選中後變為警告顏色 */
 }
 
-.custom-textfield .MuiInputLabel-root.Mui-focused {
-    border-width: 1px;
-  color: #ff9800; /* 選中後標籤變為橘色 */
+.ipt .MuiInputLabel-root.Mui-focused {
+  border-width: 1px;
+  color: rgba(0, 0, 0, 0.4);
 }
 
-.custom-form-control .MuiInputBase-root {
+.ipt .MuiInputBase-root {
   border-radius: 12px; /* 強化圓角 */
 }
 
@@ -30,5 +60,11 @@
 }
 
 .myBtn {
-    margin-top: 30px;
+    height: 3.2em !important;
+    margin-top: 5px !important;
+    background-color: #4793C8 !important;
+    border-radius: 8px !important; /* 強化圓角 */
+    font-size: 1.0375rem !important;
+    font-weight: 700 !important;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.001) !important;
 }
