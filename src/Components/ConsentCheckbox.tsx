@@ -1,19 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/ConsentCheckbox.css";
 
-const ConsentCheckbox: React.FC = () => {
-  const [isChecked, setIsChecked] = useState(false);
+interface ConsentCheckboxProps {
+  checked: boolean;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
-  const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
-  };
-
+const ConsentCheckbox: React.FC<ConsentCheckboxProps> = ({ checked, onChange }) => {
   return (
     <div className="flex items-center gap-0.5">
-      <input type="checkbox" id="consent" checked={isChecked} onChange={handleCheckboxChange} className="hidden" />
-      <label htmlFor="consent" className={`checkbox-label ${isChecked ? "checked" : ""}`}>
-        {isChecked && (
+      <input type="checkbox" id="consent" checked={checked} onChange={onChange} className="hidden" />
+      <label htmlFor="consent" className={`checkbox-label ${checked ? "checked" : ""}`}>
+        {checked && (
           <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
           </svg>

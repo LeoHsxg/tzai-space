@@ -2,7 +2,7 @@ import React from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { app, auth } from "./firebase"; // Now you can use `auth` or other Firebase functions here
+// import { app, auth } from "./firebase/firebase"; // Now you can use `auth` or other Firebase functions here
 import NavBar from "./Components/NavBar";
 import Footer from "./Components/Footer";
 import Calendar from "./pages/Calendar";

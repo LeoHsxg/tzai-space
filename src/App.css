@@ -58,23 +58,3 @@ table {
 .all {
     position: relative;
 }
-
-.image-bg-4 {
-    position: relative;
-    background-size: cover;
-    background-image: url(/src/img/grid.svg);
-}
-
-.image-bg-4::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(255, 255, 255, 0.5);
-}
-
-.image-bg-4 .content {
-    position: relative;
-}
