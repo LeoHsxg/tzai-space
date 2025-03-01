@@ -38,6 +38,7 @@ export class FCAPI {
         await gapi.auth2.init({
           client_id: "154014267141-ii9vds533i6lg0c8du8b01q4d3vqettp.apps.googleusercontent.com",
         });
+
         this.isGoogleAuthInitialized = true;
         console.log("Google API 初始化成功");
       } catch (error) {
@@ -77,14 +78,17 @@ export class FCAPI {
       // 初始化 Google Calendar API 客戶端
       await gapi.client.load("calendar", "v3");
 
+      // 取得存取權杖，並設定到 gapi.client 上
+      const googleAuth = gapi.auth2.getAuthInstance();
+      const token = googleAuth.currentUser.get().getAuthResponse().access_token;
+      gapi.client.setToken({ access_token: token });
+
       // 大概是這裡要做檢測合法性
 
       // 建立事件的資料
       const event = {
-        name: data.name,
-        phone: data.phone,
-        crowdSize: data.crowdSize,
-        room: data.room,
+        summary: `活動申請 - ${data.name}`,
+        description: data.eventDescription,
         start: {
           dateTime: data.checkinTime,
           timeZone: "Asia/Taipei",
@@ -93,12 +97,19 @@ export class FCAPI {
           dateTime: data.checkoutTime,
           timeZone: "Asia/Taipei",
         },
-        description: data.eventDescription,
+        extendedProperties: {
+          private: {
+            name: data.name,
+            phone: data.phone,
+            crowdSize: data.crowdSize,
+            room: data.room,
+          },
+        },
       };
 
       // 發送請求建立事件
       const response = await gapi.client.calendar.events.insert({
-        auth: auth,
+        // auth: auth,
         calendarId: "oa27fmn21hoqd0hvdpg1bqlv1k@group.calendar.google.com",
         resource: event,
       });

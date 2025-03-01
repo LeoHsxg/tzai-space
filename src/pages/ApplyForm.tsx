@@ -62,7 +62,7 @@ const ApplyForm: React.FC = () => {
 
       alert("活動建立成功");
     } catch (error: unknown) {
-      console.error("送出表單錯誤：", error);
+      // console.error("送出表單錯誤：", error);
       alert("送出表單時發生錯誤: " + (error as Error).message);
     }
   };
