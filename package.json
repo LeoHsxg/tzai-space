@@ -19,6 +19,7 @@
     "@types/lodash": "^4.17.7",
     "dayjs": "^1.11.13",
     "firebase": "^10.13.2",
+    "firebase-functions": "^6.3.2",
     "gapi": "^0.0.3",
     "gapi-script": "^1.2.0",
     "googleapis": "^105.0.0",

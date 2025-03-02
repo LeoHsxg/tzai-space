@@ -4,7 +4,7 @@ import InputLabel from "@mui/material/InputLabel";
 import TextField from "@mui/material/TextField";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
-import { FCAPI, auth } from "../firebase/firebase"; // 改成引入你撰寫的 API
+import { FCAPI } from "../firebase/firebase"; // 改成引入你撰寫的 API
 import ConsentCheckbox from "../Components/ConsentCheckbox";
 import "../styles/ApplyForm.css";
 
@@ -40,13 +40,7 @@ const ApplyForm: React.FC = () => {
     }
 
     try {
-      // 若使用者尚未登入，則要求使用 Google 登入，並額外要求 Google Calendar 權限
-      let currentUser = auth.currentUser;
-      if (!currentUser) {
-        currentUser = await FCAPI.signInWithGoogle();
-      } else {
-        console.log("使用者已登入:", currentUser.email);
-      }
+      await FCAPI.signInWithGoogle();
 
       let event = {
         name: applicantName,
