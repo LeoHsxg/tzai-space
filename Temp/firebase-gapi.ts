@@ -42,8 +42,6 @@ export class FCAPI {
     try {
       await gapi.client.init({
         clientId: "154014267141-ii9vds533i6lg0c8du8b01q4d3vqettp.apps.googleusercontent.com",
-        discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"],
-        scope: "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events",
       });
       this.isGoogleAuthInitialized = true;
       console.log("Google API 初始化成功");

@@ -4,9 +4,12 @@ import InputLabel from "@mui/material/InputLabel";
 import TextField from "@mui/material/TextField";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
-import { FCAPI } from "../firebase/firebase"; // 改成引入你撰寫的 API
+import { signInWithGoogle } from "../firebase/fapi"; // 改成引入你撰寫的 API
 import ConsentCheckbox from "../Components/ConsentCheckbox";
 import "../styles/ApplyForm.css";
+
+// const FUNCTION_URL = "https://addeventtocalendar-u5raioyw6q-uc.a.run.app";
+const FUNCTION_URL = "https://tzai-space.web.app/api/";
 
 // 這個應用程式未經 Google 驗證 這個應用程式要求存取您 Google 帳戶中的機密資訊。在開發人員 (leosimba9487@gmail.com) 向 Google 驗證這個應用程式之前，請勿使用這個應用程式。
 
@@ -22,7 +25,7 @@ const ApplyForm: React.FC = () => {
 
   // 元件掛載時初始化 Google API 客戶端
   React.useEffect(() => {
-    FCAPI.initializeGoogleAuth();
+    // FCAPI.initializeGoogleAuth();
   }, []);
 
   // 處理同意勾選狀態（假設 ConsentCheckbox 支援 checked 與 onChange）
@@ -40,24 +43,35 @@ const ApplyForm: React.FC = () => {
     }
 
     try {
-      await FCAPI.signInWithGoogle();
+      // const user = await signInWithGoogle();
 
-      let event = {
+      const requestBody = {
         name: applicantName,
         phone: phone,
         crowdSize: crowdSize,
         room: location,
         checkinTime: startDate.toISOString(),
         checkoutTime: endDate.toISOString(),
+        // email: user.email,
+        email: "test@gmail.com",
         eventDescription: description,
       };
 
-      await FCAPI.createCalendarEvent(event);
+      const response = await fetch(FUNCTION_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestBody),
+      });
 
-      alert("活動建立成功");
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Unknown error");
+      }
+
+      const result = await response.json();
+      alert("後端回傳：" + result.message);
     } catch (error: unknown) {
-      // console.error("送出表單錯誤：", error);
-      alert("送出表單時發生錯誤: " + (error as Error).message);
+      alert("請求失敗：" + (error as Error).message);
     }
   };
 
@@ -83,11 +97,11 @@ const ApplyForm: React.FC = () => {
           <FormControl className="ipt" fullWidth>
             <InputLabel>借用地點</InputLabel>
             <Select labelId="demo-simple-select-label" placeholder="借用地點" onChange={e => setLocation(e.target.value as string)}>
-              <MenuItem value={10}>小導師室</MenuItem>
-              <MenuItem value={20}>書房</MenuItem>
-              <MenuItem value={30}>橘廳</MenuItem>
-              <MenuItem value={30}>會議室</MenuItem>
-              <MenuItem value={30}>貢丸室</MenuItem>
+              <MenuItem value={"小導師室"}>小導師室</MenuItem>
+              <MenuItem value={"書房"}>書房</MenuItem>
+              <MenuItem value={"橘廳"}>橘廳</MenuItem>
+              <MenuItem value={"會議室"}>會議室</MenuItem>
+              <MenuItem value={"貢丸室"}>貢丸室</MenuItem>
             </Select>
           </FormControl>
         </div>
