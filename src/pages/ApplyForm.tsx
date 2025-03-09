@@ -12,7 +12,7 @@ import ConsentCheckbox from "../Components/ConsentCheckbox";
 import "../styles/ApplyForm.css";
 
 // const FUNCTION_URL = "https://addeventtocalendar-u5raioyw6q-uc.a.run.app";
-const FUNCTION_URL = "https://tzai-space.web.app/api/";
+const FUNCTION_URL = "https://tzai-space.web.app/api/add/";
 
 interface SnackbarState {
   open: boolean;

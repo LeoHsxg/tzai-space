@@ -11,8 +11,12 @@
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
-        "source": "/api/**",
+        "source": "/api/add/**",
         "function": "addEventToCalendar"
+      },
+      {
+        "source": "/api/get/**",
+        "function": "getEventsForMonth"
       },
       {
         "source": "**",
