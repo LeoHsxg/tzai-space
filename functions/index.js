@@ -51,18 +51,18 @@ async function addEvent(event, auth) {
     throw new Error("Phone length doesn's match!");
   }
   if (/^\d+$/.exec(event.crowdSize) == null) {
-    throw new Error("Crowd size must be integer!");
+    throw new Error("為什麼人數會有小數啦...");
   }
   if (parseInt(event.crowdSize) <= 0) {
-    throw new Error("老兄你是幽靈嗎？");
+    throw new Error("人數請至少為 1, 老兄你是幽靈嗎?");
   }
   if (event.name.includes("\n")) {
     throw new Error("Name cannot contain newline!");
   }
   if (event.name.length > 30) {
-    throw new Error("Ovuvuevuevue enyetuenwuevue ugbemugbem  osas, 名字太長啦");
+    throw new Error("名字太長啦, Ovuvuevuevue enyetuenwuevue ugbemugbem  osas");
   }
-  if (event.eventDescription.length > 500) {
+  if (event.eventDescription.length > 100) {
     throw new Error("感謝你描述那麼詳細，但是太詳細了");
   }
   // room 只允許這四個值
@@ -82,7 +82,7 @@ async function addEvent(event, auth) {
   }
   // 檢查區間是否正確
   if (st >= ed) {
-    throw new Error("對時間逆行者致上敬意, 但結束時間還請大於開始時間");
+    throw new Error("結束時間請大於開始時間, 對時間逆行者致上敬意");
   }
   const diffInHours = (ed - st) / (1000 * 3600);
   if (diffInHours > 4) {
@@ -159,10 +159,10 @@ async function addEvent(event, auth) {
     },
   });
 
-  // 新增成功後回傳一個訊息
+  // 新增成功後回傳一個訊息 => 沒有用到
   return {
     message:
-      "Successfully booked.\n" +
+      "預約成功\n" +
       "Please check the calendar since this system is still in beta phase " +
       "and might make some mistakes (in case of unexpected conflict, " +
       "whichever with an earlier create time is effective).",

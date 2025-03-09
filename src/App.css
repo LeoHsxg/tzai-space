@@ -34,6 +34,8 @@ footer, header, hgroup, menu, nav, section {
 body {
     line-height: 1;
     background-color: #f0f0f0;
+    font-family: 'Noto Sans TC', 'PingFang TC', 'Heiti TC', sans-serif;
+      
 }
 
 ol, ul {

@@ -1,17 +1,25 @@
 import React, { useState } from "react";
 import { Button, Box, MenuItem, FormControl, Select } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent } from "@mui/material";
+import { CircularProgress, Snackbar, Alert } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import TextField from "@mui/material/TextField";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
-import { signInWithGoogle } from "../firebase/fapi"; // 改成引入你撰寫的 API
+
+import { signInWithGoogle } from "../firebase/fapi";
 import ConsentCheckbox from "../Components/ConsentCheckbox";
 import "../styles/ApplyForm.css";
 
 // const FUNCTION_URL = "https://addeventtocalendar-u5raioyw6q-uc.a.run.app";
 const FUNCTION_URL = "https://tzai-space.web.app/api/";
 
-// 這個應用程式未經 Google 驗證 這個應用程式要求存取您 Google 帳戶中的機密資訊。在開發人員 (leosimba9487@gmail.com) 向 Google 驗證這個應用程式之前，請勿使用這個應用程式。
+interface SnackbarState {
+  open: boolean;
+  message: string;
+  severity: "success" | "error" | "info" | "warning"; // green, red, blue, orange
+  // variant: "standard" | "filled" | "outlined";
+}
 
 const ApplyForm: React.FC = () => {
   const [startDate, setStartDate] = useState<Dayjs | null>(dayjs());
@@ -23,10 +31,25 @@ const ApplyForm: React.FC = () => {
   const [description, setDescription] = useState<string>("");
   const [consent, setConsent] = useState<boolean>(false);
 
-  // 元件掛載時初始化 Google API 客戶端
-  React.useEffect(() => {
-    // FCAPI.initializeGoogleAuth();
-  }, []);
+  // 控制 Dialog
+  const [loading, setLoading] = useState<boolean>(false);
+
+  // 控制 Snackbar
+  const [snackbarState, setSnackbarState] = useState<SnackbarState>({
+    open: false,
+    message: "",
+    severity: "success",
+  });
+  const { open: openSnackbar, message: snackbarMessage, severity: snackbarSeverity } = snackbarState;
+  const handleOpenSnackbar = (message: string, severity: "success" | "error") => {
+    setSnackbarState({ open: true, message, severity });
+  };
+  const handleCloseSnackbar = () => {
+    setSnackbarState({ ...snackbarState, open: false });
+  };
+
+  // 元件掛載時初始化 => 沒有用到
+  React.useEffect(() => {}, []);
 
   // 處理同意勾選狀態（假設 ConsentCheckbox 支援 checked 與 onChange）
   const handleConsentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,8 +65,12 @@ const ApplyForm: React.FC = () => {
       return;
     }
 
+    setLoading(true);
+
     try {
-      // const user = await signInWithGoogle();
+      const user = await signInWithGoogle();
+      console.log("使用者的 Email: ", user.email);
+      console.log("使用者的 UID: ", user.uid);
 
       const requestBody = {
         name: applicantName,
@@ -56,22 +83,30 @@ const ApplyForm: React.FC = () => {
         email: "test@gmail.com",
         eventDescription: description,
       };
+      console.log("Request Body:", requestBody);
 
       const response = await fetch(FUNCTION_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestBody),
       });
-
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || "Unknown error");
       }
 
-      const result = await response.json();
-      alert("後端回傳：" + result.message);
+      // 接收後端傳回的成功資訊
+      // const result = await response.json();
+      // alert(result.message);
+
+      handleOpenSnackbar("預約成功。", "success");
+      // setSnackbarMessage(result.message);
     } catch (error: unknown) {
-      alert("請求失敗：" + (error as Error).message);
+      handleOpenSnackbar((error as Error).message || "請求失敗，請稍後再試。", "error");
+      // setSnackbarMessage((error as Error).message || "請求失敗，請稍後再試。");
+    } finally {
+      setLoading(false); // 隱藏 Loading Dialog
+      // setOpenSnackbar(true); // 顯示結果
     }
   };
 
@@ -139,6 +174,32 @@ const ApplyForm: React.FC = () => {
           確認送出
         </Button>
       </div>
+
+      {/* 1. MUI Dialog - Loading 彈出視窗 */}
+      <Dialog
+        open={loading}
+        aria-labelledby="loading-dialog"
+        fullWidth
+        maxWidth="sm"
+        sx={{
+          "& .MuiBackdrop-root": {
+            backgroundColor: "rgba(0, 0, 0, 0.8)", // 調整背景顏色，讓它變得更黑
+          },
+        }}>
+        <DialogTitle id="loading-dialog" font-bold font-noto>
+          處理中...
+        </DialogTitle>
+        <DialogContent className="flex flex-col items-center">
+          <CircularProgress />
+        </DialogContent>
+      </Dialog>
+
+      {/* 2. MUI Snackbar - 結果通知 */}
+      <Snackbar anchorOrigin={{ vertical: "top", horizontal: "center" }} open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <Alert severity={snackbarSeverity} variant="filled" onClose={handleCloseSnackbar} sx={{ width: "90%" }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
