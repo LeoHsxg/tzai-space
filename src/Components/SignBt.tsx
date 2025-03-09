@@ -8,6 +8,7 @@ const SignBt: React.FC = () => {
   // 點擊按鈕時切換狀態
   const handleToggle = () => {
     setIsLogin(!isLogin);
+    alert(window.getComputedStyle(document.body).fontFamily);
   };
 
   return (
