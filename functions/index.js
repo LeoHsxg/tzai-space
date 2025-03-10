@@ -75,7 +75,7 @@ exports.getEventsForMonth = functions.https.onRequest(async (request, response) 
 
     // 如果有事件，回傳事件資料；如果沒有，回傳空訊息
     if (events.length > 0) {
-      response.status(200).send({ events });
+      response.status(200).json({ events });
     } else {
       response.status(200).send({ message: "No events found for this month." });
     }

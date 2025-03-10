@@ -63,7 +63,7 @@ async function addEvent(event) {
     throw new Error("Please select the room to book :)");
   }
 
-  // 轉成 Date 物件後再 toISOString() (帶 +08:00 主要是指定 Asia/Taipei 區時)
+  // 轉成 Date 物件後再 toISOString()
   const st = new Date(event.checkinTime);
   const ed = new Date(event.checkoutTime);
   const today = new Date();
@@ -148,6 +148,15 @@ async function addEvent(event) {
       end: {
         dateTime: ed,
         timeZone: TIME_ZONE,
+      },
+      extendedProperties: {
+        shared: {
+          phone: event.phone,
+          crowdSize: event.crowdSize,
+          name: event.name,
+          email: event.email,
+          eventDescription: event.eventDescription,
+        },
       },
     },
   });

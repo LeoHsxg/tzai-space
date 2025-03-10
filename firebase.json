@@ -15,7 +15,7 @@
         "function": "addEventToCalendar"
       },
       {
-        "source": "/api/get/**",
+        "source": "/api/get",
         "function": "getEventsForMonth"
       },
       {
