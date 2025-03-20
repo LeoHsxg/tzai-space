@@ -20,7 +20,7 @@ const Reserve = ({ onClick, event }: ReserveProps) => {
   const colorMap: Record<string, string> = {
     書房: "#E44C4C", // 紅色
     橘廳: "#FF6F0D", // 橘色
-    會議室: "#00E0FF", // 藍色
+    會議室: "#54A0F9", // 藍色
     小導師室: "#FFD81E", // 黃色
     貢丸室: "#9458E2", // 粉色
   };
@@ -31,7 +31,7 @@ const Reserve = ({ onClick, event }: ReserveProps) => {
   const timeRange = `${st.format("HH:mm")} → ${ed.format("HH:mm")}`;
 
   const handleClick = () => {
-    console.log("完整事件物件:", event);
+    // console.log("完整事件物件:", event);
     console.log("colorMap[colorId]: ", colorMap[room]); // 檢查顏色是否存在
 
     // 執行外部傳遞進來的 `onClick`, 很重要！
