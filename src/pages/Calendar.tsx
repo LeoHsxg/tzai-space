@@ -24,6 +24,7 @@ const Calendar: React.FC = () => {
       const text = await response.text();
       try {
         const data = JSON.parse(text);
+        console.log("解析後的事件:", data.events);
         setEvents(data.events || []);
       } catch (error) {
         console.error("JSON 解析失敗，回應內容:", text, "\n錯誤訊息:", error);
@@ -37,11 +38,12 @@ const Calendar: React.FC = () => {
 
   const handleClickOpen = (event: Event) => {
     setSelectedEvent(event);
+    // console.log("selectedEvent:", selectedEvent);
     setOpen(true);
   };
 
   const handleClose = () => {
-    setSelectedEvent(null);
+    // setSelectedEvent(null);
     setOpen(false);
   };
 

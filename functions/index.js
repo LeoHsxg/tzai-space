@@ -68,10 +68,12 @@ exports.getEventsForMonth = functions.https.onRequest(async (request, response) 
       maxResults: 2000,
       singleEvents: true, // 確保不會取得重複的事件
       orderBy: "startTime", // 按時間排序
+      fields: "items(start,end,summary,description,extendedProperties(shared))",
     });
 
     // 取得事件資料
     const events = eventListResp.data.items || [];
+    console.log("Fetched events:", events);
 
     // 如果有事件，回傳事件資料；如果沒有，回傳空訊息
     if (events.length > 0) {

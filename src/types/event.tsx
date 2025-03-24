@@ -8,11 +8,12 @@ export type Event = {
   };
   summary: string;
   colorId?: string;
+  description: string;
   extendedProperties: {
     shared: {
-      phone: string;
-      crowdSize: string;
       name: string;
+      crowdSize: string;
+      phone: string;
       email: string;
       eventDescription: string;
     };

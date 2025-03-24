@@ -31,9 +31,7 @@ const Reserve = ({ onClick, event }: ReserveProps) => {
   const timeRange = `${st.format("HH:mm")} → ${ed.format("HH:mm")}`;
 
   const handleClick = () => {
-    // console.log("完整事件物件:", event);
-    console.log("colorMap[colorId]: ", colorMap[room]); // 檢查顏色是否存在
-
+    console.log("完整事件物件:", event);
     // 執行外部傳遞進來的 `onClick`, 很重要！
     onClick(event);
   };
