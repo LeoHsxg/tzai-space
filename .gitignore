@@ -13,6 +13,8 @@ dist-ssr
 *.local
 
 .firebase/*
+gitlog_tmp.txt
+
 
 # Editor directories and files
 .vscode/*

@@ -52,7 +52,8 @@ exports.getEventsForMonth = functions.https.onRequest(async (request, response) 
   // 計算該月的開始時間和結束時間
   // 傻逼 javascript 的 month 是從 0 開始，所以要 -1
   const startOfMonth = new Date(year, month - 1, 1);
-  const endOfMonth = new Date(year, month, 0);
+  // 後續被轉換為 ISO 格式，時間下限會是這一天的零點，因此需要加 1 天
+  const endOfMonth = new Date(year, month, 1);
 
   // 轉換為 ISO 格式
   const timeMin = startOfMonth.toISOString();
