@@ -26,9 +26,9 @@ function getServiceAccountAuth() {
 
 /**
  * addEvent: 處理核心的「新增事件(預訂)」或「刪除事件(取消)」邏輯
- * @param {Object} event - 從前端傳來的資料 (例如 event.checkinTime, event.checkoutTime...)
+ * @param {Object} event - 從後端傳來的資料
  * @param {google.auth.JWT} auth - 透過 getServiceAccountAuth() 取得的 JWT，用於呼叫 Calendar API
- * @returns {Promise<Object>} - 回傳一個物件，內含 message 欄位 (例如 {message: "Successfully booked"})
+ * @returns {Promise<Object>} - 回傳一個物件，內含 message 欄位
  */
 async function addEvent(event) {
   // 先看一下 event 內容，方便除錯
@@ -36,51 +36,9 @@ async function addEvent(event) {
 
   let auth = getServiceAccountAuth();
 
-  // 基本資料檢查：電話號碼/人數/姓名/描述的長度或格式
-  if (/^\d+$/.exec(event.phone) == null) {
-    throw new Error("Phone number must be an integer!");
-  }
-  if (event.phone.length != 10) {
-    throw new Error("Phone length doesn's match!");
-  }
-  if (parseInt(event.crowdSize) <= 0) {
-    throw new Error("人數請至少為 1, 老兄你是幽靈嗎?");
-  }
-  if (/^\d+$/.exec(event.crowdSize) == null) {
-    throw new Error("為什麼人數會有小數啦...");
-  }
-  if (event.name.includes("\n")) {
-    throw new Error("Name cannot contain newline!");
-  }
-  if (event.name.length > 30) {
-    throw new Error("名字太長啦, Ovuvuevuevue enyetuenwuevue ugbemugbem osas");
-  }
-  if (event.eventDescription.length > 100) {
-    throw new Error("感謝你描述那麼詳細，但是太詳細了");
-  }
-  // room 只允許這四個值
-  if (!["書房", "橘廳", "會議室", "小導師室", "貢丸室"].includes(event.room)) {
-    throw new Error("Please select the room to book :)");
-  }
-
   // 轉成 Date 物件後再 toISOString()
   const st = new Date(event.checkinTime);
   const ed = new Date(event.checkoutTime);
-  const today = new Date();
-
-  // 限制只能預訂未來 31 天內的時間
-  const diffInDays = (st - today) / (1000 * 3600 * 24);
-  if (diffInDays > 31) {
-    throw new Error("Not allowed to book further than one month to the future.");
-  }
-  // 檢查區間是否正確
-  if (st >= ed) {
-    throw new Error("結束時間請大於開始時間, 對時間逆行者致上敬意");
-  }
-  const diffInHours = (ed - st) / (1000 * 3600);
-  if (diffInHours > 4) {
-    throw new Error("一次最多只能借用四小時！");
-  }
 
   // 組合要寫進 Google Calendar "description" 的內容
   const desc = [

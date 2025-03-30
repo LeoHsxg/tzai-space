@@ -8,6 +8,7 @@ import { DateTimePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 
 import { signInWithGoogle } from "../firebase/fapi";
+import { validateData } from "../func/applyFunc";
 import ConsentCheckbox from "../Components/ConsentCheckbox";
 import "../styles/ApplyForm.css";
 
@@ -68,10 +69,6 @@ const ApplyForm: React.FC = () => {
     setLoading(true);
 
     try {
-      const user = await signInWithGoogle();
-      console.log("使用者的 Email: ", user.email);
-      console.log("使用者的 UID: ", user.uid);
-
       const requestBody = {
         name: applicantName,
         phone: phone,
@@ -85,6 +82,15 @@ const ApplyForm: React.FC = () => {
       };
       console.log("Request Body:", requestBody);
 
+      // 基本資料檢查：電話號碼/人數/姓名/描述的長度或格式
+      await validateData(requestBody);
+
+      // google 登入
+      const user = await signInWithGoogle();
+      console.log("使用者的 Email: ", user.email);
+      console.log("使用者的 UID: ", user.uid);
+      requestBody.email = user.email ?? "test@gmail.com"; // 更新 email
+
       const response = await fetch(FUNCTION_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -94,10 +100,6 @@ const ApplyForm: React.FC = () => {
         const errorData = await response.json();
         throw new Error(errorData.message || "Unknown error");
       }
-
-      // 接收後端傳回的成功資訊
-      // const result = await response.json();
-      // alert(result.message);
 
       handleOpenSnackbar("預約成功。", "success");
       // setSnackbarMessage(result.message);
@@ -136,7 +138,7 @@ const ApplyForm: React.FC = () => {
               <MenuItem value={"書房"}>書房</MenuItem>
               <MenuItem value={"橘廳"}>橘廳</MenuItem>
               <MenuItem value={"會議室"}>會議室</MenuItem>
-              <MenuItem value={"貢丸室"}>貢丸室</MenuItem>
+              {/* <MenuItem value={"貢丸室"}>貢丸室</MenuItem> */}
             </Select>
           </FormControl>
         </div>

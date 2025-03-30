@@ -25,7 +25,6 @@ exports.addEventToCalendar = functions.https.onRequest(async (request, response)
   // 取得資料, 建立 JWT，用 Service Account 授權
   const eventData = request.body;
   try {
-    // 嘗試執行主邏輯
     const result = await addEvent(eventData);
     response.status(200).send(result);
   } catch (err) {
@@ -43,12 +42,10 @@ exports.getEventsForMonth = functions.https.onRequest(async (request, response) 
   // request.query：用於存放 URL 中的查詢參數，也就是 URL 中 ? 之後的部分。
   // 例如：?year=2024&month=3, request.query 就會是 { year: "2024", month: "3" }
   const { year, month } = request.query;
-
   if (!year || !month) {
     response.status(400).send("Year and month are required.");
     return;
   }
-
   // 計算該月的開始時間和結束時間
   // 傻逼 javascript 的 month 是從 0 開始，所以要 -1
   const startOfMonth = new Date(year, month - 1, 1);
@@ -58,7 +55,6 @@ exports.getEventsForMonth = functions.https.onRequest(async (request, response) 
   // 轉換為 ISO 格式
   const timeMin = startOfMonth.toISOString();
   const timeMax = endOfMonth.toISOString();
-
   try {
     // 使用 calendar.events.list 來讀取該月的事件 Event List Response"
     const eventListResp = await calendar.events.list({
