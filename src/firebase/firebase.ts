@@ -33,8 +33,8 @@ export async function signInWithGoogle() {
   const displayName = user.displayName;
 
   console.log("使用者的 Email: ", email);
-  console.log("使用者的 UID: ", uid);
-  console.log("使用者的顯示名稱: ", displayName);
+  // console.log("使用者的 UID: ", uid);
+  // console.log("使用者的顯示名稱: ", displayName);
 
   return { email, uid, displayName };
 }

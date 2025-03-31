@@ -1,21 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
+import { signInWithGoogle, auth } from "../firebase/firebase";
+import { signOut } from "firebase/auth";
+import { useAuth } from "../hooks/useAuth"; // 假設這是你的 auth hook
 import "../styles/SignBt.css";
 
 const SignBt: React.FC = () => {
-  // 使用 useState 來管理按鈕的狀態，預設為登出
-  const [isLogin, setIsLogin] = useState(false);
+  const user = useAuth(); // 拿到目前登入的使用者
 
-  // 點擊按鈕時切換狀態
-  const handleToggle = () => {
-    setIsLogin(!isLogin);
-    alert(window.getComputedStyle(document.body).fontFamily);
+  const handleToggle = async () => {
+    try {
+      if (!user) {
+        await signInWithGoogle();
+        console.log(user, " 登入成功！");
+      } else {
+        await signOut(auth);
+        console.log(user, " 登出成功！");
+      }
+    } catch (error) {
+      console.error("登入或登出失敗：", error);
+    }
   };
 
   return (
     <div onClick={handleToggle} className="signBt">
       {/* 動態根據 isLogin 狀態變換按鈕的外觀 */}
-      <div className={`bt signBt-button ${isLogin ? "login" : ""}`}></div>
-      <div className={`signBt-text word ${isLogin ? "login" : ""}`}>{isLogin ? "登入" : "登出"}</div>
+      <div className={`bt signBt-button ${user ? "" : "login"}`}></div>
+      <div className={`signBt-text word ${user ? "" : "login"}`}>{user ? "登出" : "登入"}</div>
     </div>
   );
 };

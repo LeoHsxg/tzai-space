@@ -2,7 +2,8 @@ import React from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-// import { app, auth } from "./firebase/firebase"; // Now you can use `auth` or other Firebase functions here
+// import { app, auth } from "./firebase/firebase";
+import { AuthProvider } from "./context/AuthContext"; // Import the AuthProvider
 import NavBar from "./Components/NavBar";
 import Footer from "./Components/Footer";
 import Calendar from "./pages/Calendar";
@@ -13,17 +14,19 @@ import "./App.css";
 const App: React.FC = () => {
   return (
     <div className="bg-[#F3F3F3] relative h-screen">
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <Router>
-          <NavBar />
-          <Routes>
-            <Route path="/" element={<Calendar />} />
-            <Route path="/apply" element={<ApplyForm />} />
-            <Route path="/rule" element={<Rule />} />
-          </Routes>
-          <Footer />
-        </Router>
-      </LocalizationProvider>
+      <AuthProvider>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <Router>
+            <NavBar />
+            <Routes>
+              <Route path="/" element={<Calendar />} />
+              <Route path="/apply" element={<ApplyForm />} />
+              <Route path="/rule" element={<Rule />} />
+            </Routes>
+            <Footer />
+          </Router>
+        </LocalizationProvider>
+      </AuthProvider>
     </div>
   );
 };

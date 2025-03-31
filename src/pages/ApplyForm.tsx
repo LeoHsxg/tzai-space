@@ -7,7 +7,7 @@ import TextField from "@mui/material/TextField";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 
-import { signInWithGoogle } from "../firebase/fapi";
+import { signInWithGoogle } from "../firebase/firebase";
 import { validateData } from "../func/applyFunc";
 import ConsentCheckbox from "../Components/ConsentCheckbox";
 import "../styles/ApplyForm.css";
