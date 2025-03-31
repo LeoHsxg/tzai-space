@@ -9,7 +9,7 @@ import { Event } from "../types/event";
 import "../styles/Calendar.css";
 
 const Calendar: React.FC = () => {
-  const [value, setValue] = React.useState<Dayjs | null>(dayjs());
+  const [value, setValue] = React.useState<Dayjs | null>(dayjs()); // 當前選中的日期
   const [events, setEvents] = useState<Event[]>([]); // 儲存事件資料
   const [filteredEvents, setFilteredEvents] = useState<Event[]>([]); // 當天的事件
   const [filteredAmount, setFilteredAmount] = useState<number>(0);
@@ -43,7 +43,6 @@ const Calendar: React.FC = () => {
   };
 
   const handleClose = () => {
-    // setSelectedEvent(null);
     setOpen(false);
   };
 
@@ -82,7 +81,6 @@ const Calendar: React.FC = () => {
           onMonthChange={handleMonthChange}
         />
       </div>
-      {/* <DateTimePicker defaultValue={dayjs("2024-08-15T21:00")} /> */}
       <div className="test w-full py-4 px-[5%] flex-col justify-center items-center inline-flex">
         <div className="self-stretch px-2.5 justify-between items-center inline-flex">
           <div className="font">今日預約共 {filteredAmount} 筆</div>
