@@ -3,6 +3,7 @@
 
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
 
 // 你的 Firebase 專案設定
 const firebaseConfig = {
@@ -17,6 +18,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+export const db = getFirestore(app);
 
 // 這個函式用來做 Google 登入
 export async function signInWithGoogle() {
@@ -35,4 +37,22 @@ export async function signInWithGoogle() {
   console.log("使用者的顯示名稱: ", displayName);
 
   return { email, uid, displayName };
+}
+
+// 取得 "current" 子集合的 "items" 資料
+export async function getRegulationsData() {
+  const docRef = doc(db, "regulations", "current"); // collection: rules, doc: current
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    // data 是 object, data 裡面的 items 是 array 沒錯，但要從 data 中取得資料需要用 Object.values(data) 來取得
+    const data = docSnap.data();
+    console.log("成功取得資料：", data);
+    const values: string[] = Object.values(data);
+    // const keys = Object.keys(data);
+    // const entries = Object.entries(data);
+    return values;
+  } else {
+    console.log("找不到條例文件！");
+    throw new Error("找不到條例文件！");
+  }
 }

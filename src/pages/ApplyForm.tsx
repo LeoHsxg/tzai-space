@@ -87,8 +87,6 @@ const ApplyForm: React.FC = () => {
 
       // google 登入
       const user = await signInWithGoogle();
-      console.log("使用者的 Email: ", user.email);
-      console.log("使用者的 UID: ", user.uid);
       requestBody.email = user.email ?? "test@gmail.com"; // 更新 email
 
       const response = await fetch(FUNCTION_URL, {
