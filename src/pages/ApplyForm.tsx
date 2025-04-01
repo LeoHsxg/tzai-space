@@ -111,8 +111,8 @@ const ApplyForm: React.FC = () => {
   };
 
   return (
-    <div className="pt-[5px] px-[5%] pb-20 w-full">
-      <Box component="form" onSubmit={handleSubmit} className="gap-5 flex flex-col justify-center items-center">
+    <div className="mt-[5px] px-[5%] pb-20 w-full">
+      <Box component="form" onSubmit={handleSubmit} className="gap-6 flex flex-col justify-center items-center">
         <div className="w-full">
           {/* <input type="text" className="ipt" label="申請人姓名"></input> */}
           <TextField
