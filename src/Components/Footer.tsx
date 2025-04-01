@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+
 // import Contract from "/src/img/contract.svg";
 import Calendar_btn_h from "../img/calendar_month_h.svg";
 import Circle_btn_h from "../img/add_circle_h.svg";
@@ -17,11 +20,22 @@ const Footer = () => {
   const location = useLocation();
   const currentPath = location.pathname;
 
+  const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === "clickaway") return;
+    setOpen(false);
+  };
+
   return (
     <div className="footer">
       <div className="footer_bar">
         <div className="box">
-          <img src={Info_btn_h} alt="Contract" className="icon_h" />
+          <img src={Info_btn_h} alt="Contract" className="icon_h" onClick={handleClick} />
           <Link to="/">
             <img
               src={`${currentPath === "/" ? Calendar_btn_s : Calendar_btn_h}`}
@@ -43,9 +57,20 @@ const Footer = () => {
               className={`${currentPath === "/rule" ? "icon_s" : "icon_h"}`}
             />
           </Link>
-          <img src={Settings_h} alt="Settings" className="icon_h" />
+          <img src={Settings_h} alt="Settings" className="icon_h" onClick={handleClick} />
         </div>
       </div>
+      <Snackbar
+        open={open}
+        autoHideDuration={2000}
+        onClose={handleClose}
+        sx={{
+          bottom: "4.25rem", // 往上 4rem
+        }}>
+        <Alert onClose={handleClose} severity="info" sx={{ width: "100%" }} elevation={6} variant="filled">
+          此功能還在施工啦啦啦 🚧
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
