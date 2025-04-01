@@ -7,7 +7,7 @@ import TextField from "@mui/material/TextField";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 
-import { signInWithGoogle } from "../firebase/firebase";
+import { useAuth } from "../hooks/useAuth"; // 假設這是你的 auth hook
 import { validateData } from "../func/applyFunc";
 import ConsentCheckbox from "../Components/ConsentCheckbox";
 import "../styles/ApplyForm.css";
@@ -23,6 +23,8 @@ interface SnackbarState {
 }
 
 const ApplyForm: React.FC = () => {
+  const user = useAuth(); // 從 context 拿使用者
+
   const [startDate, setStartDate] = useState<Dayjs | null>(dayjs());
   const [endDate, setEndDate] = useState<Dayjs | null>(dayjs());
   const [applicantName, setApplicantName] = useState<string>("");
@@ -31,9 +33,7 @@ const ApplyForm: React.FC = () => {
   const [location, setLocation] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [consent, setConsent] = useState<boolean>(false);
-
-  // 控制 Dialog
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false); // 控制 Dialog
 
   // 控制 Snackbar
   const [snackbarState, setSnackbarState] = useState<SnackbarState>({
@@ -49,14 +49,12 @@ const ApplyForm: React.FC = () => {
     setSnackbarState({ ...snackbarState, open: false });
   };
 
-  // 元件掛載時初始化 => 沒有用到
-  React.useEffect(() => {}, []);
-
   // 處理同意勾選狀態（假設 ConsentCheckbox 支援 checked 與 onChange）
   const handleConsentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setConsent(event.target.checked);
   };
 
+  // 表單提交核心程式
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -69,6 +67,10 @@ const ApplyForm: React.FC = () => {
     setLoading(true);
 
     try {
+      if (!user) {
+        throw new Error("請先進行登入！");
+      }
+
       const requestBody = {
         name: applicantName,
         phone: phone,
@@ -76,18 +78,13 @@ const ApplyForm: React.FC = () => {
         room: location,
         checkinTime: startDate.toISOString(),
         checkoutTime: endDate.toISOString(),
-        // email: user.email,
-        email: "test@gmail.com",
+        email: user.email ?? "test@gmail.com",
         eventDescription: description,
       };
       console.log("Request Body:", requestBody);
 
       // 基本資料檢查：電話號碼/人數/姓名/描述的長度或格式
       await validateData(requestBody);
-
-      // google 登入
-      const user = await signInWithGoogle();
-      requestBody.email = user.email ?? "test@gmail.com"; // 更新 email
 
       const response = await fetch(FUNCTION_URL, {
         method: "POST",
@@ -101,18 +98,16 @@ const ApplyForm: React.FC = () => {
 
       handleOpenSnackbar("預約成功。", "success");
       // setSnackbarMessage(result.message);
-    } catch (error: unknown) {
-      handleOpenSnackbar((error as Error).message || "請求失敗，請稍後再試。", "error");
-      // setSnackbarMessage((error as Error).message || "請求失敗，請稍後再試。");
+    } catch (err: unknown) {
+      handleOpenSnackbar((err as Error).message || "請求失敗，請稍後再試。", "error");
     } finally {
       setLoading(false); // 隱藏 Loading Dialog
-      // setOpenSnackbar(true); // 顯示結果
     }
   };
 
   return (
     <div className="mt-[5px] px-[5%] pb-20 w-full">
-      <Box component="form" onSubmit={handleSubmit} className="gap-6 flex flex-col justify-center items-center">
+      <Box component="form" onSubmit={handleSubmit} className="gap-5 flex flex-col justify-center items-center">
         <div className="w-full">
           {/* <input type="text" className="ipt" label="申請人姓名"></input> */}
           <TextField
