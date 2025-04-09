@@ -163,7 +163,8 @@ const ApplyForm: React.FC = () => {
           />
         </div>
       </Box>
-      <div className="mt-[20px] flex flex-col justify-center items-center">
+      <div className="mt-2 flex flex-col justify-center items-center">
+        <div className="px-2 noto font-normal text-gray-400 text-xs text-center">*請使用系統瀏覽器開啟，FB 等軟體的內建瀏覽器無法使用</div>
         <ConsentCheckbox checked={consent} onChange={handleConsentChange} />
         <Button className="myBtn" type="submit" variant="contained" fullWidth size="large" onClick={handleSubmit}>
           確認送出

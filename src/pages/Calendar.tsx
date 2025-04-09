@@ -91,7 +91,7 @@ const Calendar: React.FC = () => {
       <div className="test w-full py-4 px-[5%] flex-col justify-center items-center inline-flex">
         <div className="self-stretch px-2.5 justify-between items-center inline-flex">
           <div className="font">今日預約共 {filteredAmount} 筆</div>
-          <div className="font underline">查看詳情</div>
+          <div className="font">預約詳情</div>
         </div>
         {loading ? (
           <div className="flex justify-center items-center w-full h-full">

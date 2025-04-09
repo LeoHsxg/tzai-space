@@ -9,7 +9,7 @@ interface ConsentCheckboxProps {
 
 const ConsentCheckbox: React.FC<ConsentCheckboxProps> = ({ checked, onChange }) => {
   return (
-    <div className="flex items-center gap-0.5">
+    <div className="flex items-center gap-0.5 mt-1">
       <input type="checkbox" id="consent" checked={checked} onChange={onChange} className="hidden" />
       <label htmlFor="consent" className={`checkbox-label ${checked ? "checked" : ""}`}>
         {checked && (

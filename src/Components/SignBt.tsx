@@ -29,7 +29,7 @@ const SignBt: React.FC = () => {
     // 未登入的設計才要更為顯眼
     <div
       onClick={handleToggle}
-      className={`w-[60px] h-[30px] mt-1 rounded-full flex items-center justify-center ${
+      className={`w-[64px] h-[32px] mt-1 rounded-full flex items-center justify-center ${
         user ? "border-[1.5px] border-solid border-gray-200" : "border-[1.5px] border-solid border-gray-200 bg-black/3"
       } relative`}>
       <div className={`noto text-xs ${user ? "font-semibold text-gray-300" : "font-extrabold text-orange-500"}`}>{user ? "登出" : "登入"}</div>
