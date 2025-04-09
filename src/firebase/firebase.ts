@@ -5,9 +5,8 @@ import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 
-// 你的 Firebase 專案設定
 const firebaseConfig = {
-  apiKey: "AIzaSyDGKPnWpC9N15OFlXnRErz7e6URy7vtNi4",
+  apiKey: import.meta.env.VITE_API_KEY,
   authDomain: "tzai-space.firebaseapp.com",
   projectId: "tzai-space",
   storageBucket: "tzai-space.appspot.com",

@@ -22,7 +22,7 @@ const Calendar: React.FC = () => {
   const fetchEvents = async (year: number, month: number) => {
     setLoading(true);
     try {
-      const response = await fetch(`https://tzai-space.web.app/api/get?year=${year}&month=${month}`);
+      const response = await fetch(`/api/get?year=${year}&month=${month}`);
       const text = await response.text();
       try {
         const data = JSON.parse(text);

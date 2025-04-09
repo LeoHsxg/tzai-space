@@ -93,11 +93,10 @@ async function addEvent(event) {
   // 直接呼叫 calendar.events.insert 新增事件
   await calendar.events.insert({
     auth,
-    calendarId: "oa27fmn21hoqd0hvdpg1bqlv1k@group.calendar.google.com", // 這個請換成你實際的 Calendar ID
+    calendarId: "oa27fmn21hoqd0hvdpg1bqlv1k@group.calendar.google.com",
     resource: {
       summary: event.room, // 顯示哪個房間
       description: desc, // 寫入我們組合好的描述
-      // colorId: 1, 也可以指定 colorId (1~11)
       colorId: ["書房", "橘廳", "會議室", "小導師室", "貢丸室"].findIndex(s => s === event.room) + 1,
       start: {
         dateTime: st,
