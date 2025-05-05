@@ -98,7 +98,7 @@ const Calendar: React.FC = () => {
       <div
         className="
           w-full py-4 px-[5%] flex flex-col items-center inline-flex 
-          md:pt-5 md:px-0 md:grow
+          md:pt-5 md:pb-0 md:px-0 md:grow
         ">
         {/* 裝飾文字 */}
         <div className="self-stretch px-2.5 justify-between items-center inline-flex">

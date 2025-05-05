@@ -33,16 +33,30 @@ const Rule = () => {
 
   return (
     <div className="w-full">
-      <p className="-mt-1 mb-3 px-[8%] noto font-bold text-black/80 text-lg">空間借用條例</p>
       {/* <div className="rule pb-[5%]">
         {rules.map((text, idx) => (<div key={idx} className="content">
             {text}
           </div>))}
       </div> */}
-      <div className="rule px-[5%] pb-20 self-stretch flex-col justify-start items-center gap-3 flex">
-        {ruleItems.map((text, index) => (
-          <Ruleblock key={index} text={text} />
-        ))}
+      <div className="w-full pb-20 md:max-w-[800px] m-auto md:pb-0 ">
+        <p
+          className="
+          -mt-1 mb-3 px-[8%] noto font-bold text-black/80 text-lg
+          md:mt-3 md:pl-4 md:pr-0
+        ">
+          空間借用條例
+        </p>
+        <div
+          className="
+            w-full px-[5%] self-stretch flex flex-col gap-3 justify-start items-center md:px-0
+            md:h-[450px] md:flex-wrap
+        ">
+          {ruleItems.map((text, index) => (
+            <div key={index} className="w-full md:w-[calc(50%-0.5rem)]">
+              <Ruleblock key={index} text={text} />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

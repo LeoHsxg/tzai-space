@@ -1,9 +1,0 @@
-.rule {
-  /* margin: 35px; */
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0 38px 35px 42px;
-
-  display: flex;
-  flex-direction: column;
-}
