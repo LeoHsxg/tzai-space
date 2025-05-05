@@ -13,16 +13,18 @@ import "./App.css";
 
 const App: React.FC = () => {
   return (
-    <div className="bg-[#F3F3F3] relative h-screen">
+    <div className="bg-[#F3F3F3] min-h-screen flex flex-col relative">
       <AuthProvider>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <Router>
             <NavBar />
-            <Routes>
-              <Route path="/" element={<Calendar />} />
-              <Route path="/apply" element={<ApplyForm />} />
-              <Route path="/rule" element={<Rule />} />
-            </Routes>
+            <main className="flex-grow">
+              <Routes>
+                <Route path="/" element={<Calendar />} />
+                <Route path="/apply" element={<ApplyForm />} />
+                <Route path="/rule" element={<Rule />} />
+              </Routes>
+            </main>
             <Footer />
           </Router>
         </LocalizationProvider>
