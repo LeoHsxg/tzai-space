@@ -78,21 +78,35 @@ const Calendar: React.FC = () => {
   }, [value, events]); // 當 `value` 或 `events` 改變時重新篩選
 
   return (
-    <div className="w-full pb-16">
-      <div className="calendarDiv w-full py-0 px-[7.5%]">
+    <div
+      className="
+        flex flex-col pb-16 
+        md:flex-row md:gap-8 md:max-w-[900px] md:mx-auto md:px-8 md:pb-0
+      ">
+      {/* 行事曆 */}
+      <div className="px-[7.5%] md:pt-5 md:px-0 md:flex md:justify-end">
         <DateCalendar
-          sx={{ width: "100%" }}
-          className="w-full m-0 bg-white rounded-xl"
+          sx={{ minWidth: { xs: "100%", md: "320px" }, margin: { md: 0 } }}
+          className="w-full bg-white rounded-xl"
           value={value}
           onChange={newValue => setValue(newValue)}
           onMonthChange={handleMonthChange}
         />
       </div>
-      <div className="test w-full py-4 px-[5%] flex-col justify-center items-center inline-flex">
+
+      {/* 預約詳情 */}
+      <div
+        className="
+          w-full py-4 px-[5%] flex flex-col items-center inline-flex 
+          md:pt-5 md:px-0 md:grow
+        ">
+        {/* 裝飾文字 */}
         <div className="self-stretch px-2.5 justify-between items-center inline-flex">
           <div className="font">今日預約共 {filteredAmount} 筆</div>
           <div className="font">預約詳情</div>
         </div>
+
+        {/* 載入中與預約列表 */}
         {loading ? (
           <div className="flex justify-center items-center w-full h-full">
             <CircularProgress />
