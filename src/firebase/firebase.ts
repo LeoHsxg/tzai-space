@@ -20,6 +20,7 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 
 // 這個函式用來做 Google 登入
+// Safari 似乎要求用 redirect? 感覺怪怪的
 export async function signInWithGoogle() {
   const provider = new GoogleAuthProvider();
 

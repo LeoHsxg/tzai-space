@@ -1,6 +1,6 @@
 import React from "react";
 import { signInWithGoogle, auth } from "../firebase/firebase";
-import { signOut } from "firebase/auth";
+import { signInWithRedirect, GoogleAuthProvider, signOut } from "firebase/auth";
 import { useAuth } from "../hooks/useAuth"; // 假設這是你的 auth hook
 
 const SignBt: React.FC = () => {
@@ -10,6 +10,8 @@ const SignBt: React.FC = () => {
     try {
       if (!user) {
         await signInWithGoogle();
+        // const provider = new GoogleAuthProvider();
+        // await signInWithRedirect(auth, provider);
         console.log("登入成功！");
       } else {
         await signOut(auth);

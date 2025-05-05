@@ -1,31 +1,5 @@
-.footer {
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-}
-
-.footer_bar {
-  display: flex;
-  width: 100%;
-  height: 3.75rem;
-  padding: 12px 8%;
-  justify-content: space-between;
-  box-sizing: border-box; /* 確保 padding 不影響 100% 的寬度 */
-  align-items: center;
-  z-index: 100;
-  flex-shrink: 0;
-
-  background: #fff;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.03);
-}
-
-.box {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 30px;
+.shadow {
+  @apply shadow-[0px_0px_10px_0px_rgba(0,0,0,0.03)]
 }
 
 .icon_h {
