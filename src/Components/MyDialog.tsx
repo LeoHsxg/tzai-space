@@ -6,9 +6,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 import { Event } from "../types/event";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
 import { useAuth } from "../hooks/useAuth";
+import { useUI } from "../context/UIContext";
 
 interface MyDialogProps {
   open: boolean;
@@ -19,9 +18,8 @@ interface MyDialogProps {
 
 const MyDialog: React.FC<MyDialogProps> = ({ open, onClose, event, onDeleteSuccess }) => {
   const user = useAuth(); // 從 context 拿使用者
-
+  const { showSnackbar, showDialog, hideDialog } = useUI(); // 使用 useUI 來管理 Snackbar
   const [data, setData] = useState<Event | null>(null); // 選中的事件
-  const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" as "success" | "error" });
 
   const parseEventDescription = (desc: string) => {
     const eventData = {
@@ -93,8 +91,14 @@ const MyDialog: React.FC<MyDialogProps> = ({ open, onClose, event, onDeleteSucce
     setData(tmpData);
   }, [event]);
 
+  // 這個函式沒有被使用到，而且 hideDialog 應該是用在 GlobalUI 裡面
+  // 我們這邊用 onClose 就好，所以可以移除這個函式
+
   const handleDelete = async () => {
     try {
+      onClose();
+      showDialog("刪除事件中...");
+
       const response = await fetch("/api/delete/", {
         method: "POST",
         headers: {
@@ -106,93 +110,68 @@ const MyDialog: React.FC<MyDialogProps> = ({ open, onClose, event, onDeleteSucce
         }),
       });
 
+      hideDialog();
       const result = await response.json();
 
       if (!response.ok) {
         throw new Error(result.message || "刪除失敗");
       }
 
-      setSnackbar({
-        open: true,
-        message: "刪除成功",
-        severity: "success",
-      });
+      showSnackbar("刪除成功", "success");
 
       // 關閉對話框並通知父組件更新
-      onClose();
       if (onDeleteSuccess) {
         onDeleteSuccess();
       }
     } catch (error) {
-      setSnackbar({
-        open: true,
-        message: error instanceof Error ? error.message : "刪除失敗",
-        severity: "error",
-      });
+      hideDialog();
+      showSnackbar(error instanceof Error ? error.message : "刪除失敗", "error");
     }
-  };
-
-  const handleSnackbarClose = () => {
-    setSnackbar({ ...snackbar, open: false });
   };
 
   // 檢查當前用戶是否為事件擁有者
   const isEventOwner = user?.email === data?.extendedProperties.shared.email;
 
   return (
-    <>
-      <Dialog open={open} onClose={onClose}>
-        <DialogTitle>
-          <span className="font-bold text-black/80">{event.summary}</span>
-        </DialogTitle>
-        {!event ? (
-          <div>加載不出資料欸？</div>
-        ) : (
-          <DialogContent>
-            <DialogContentText className="space-y-0.5">
-              <div>
-                <span className="font-bold">姓名</span> &nbsp;{data?.extendedProperties.shared.name}
-              </div>
-              <div>
-                <span className="font-bold">郵件</span> &nbsp;{data?.extendedProperties.shared.email}
-              </div>
-              <div>
-                <span className="font-bold">人數</span> &nbsp;{data?.extendedProperties.shared.crowdSize}
-              </div>
-              <div>
-                <span className="font-bold">起始</span> &nbsp;{data?.start.dateTime}
-              </div>
-              <div>
-                <span className="font-bold">結束</span> &nbsp;{data?.end.dateTime}
-              </div>
-              <div>
-                <span className="font-bold">簡述</span> &nbsp;{data?.extendedProperties.shared.eventDescription}
-              </div>
-            </DialogContentText>
-          </DialogContent>
+    <Dialog open={open} onClose={onClose}>
+      <DialogTitle>
+        <span className="font-bold text-black/80">{event.summary}</span>
+      </DialogTitle>
+      {!event ? (
+        <div>加載不出資料欸？</div>
+      ) : (
+        <DialogContent>
+          <DialogContentText className="space-y-0.5">
+            <div>
+              <span className="font-bold">姓名</span> &nbsp;{data?.extendedProperties.shared.name}
+            </div>
+            <div>
+              <span className="font-bold">郵件</span> &nbsp;{data?.extendedProperties.shared.email}
+            </div>
+            <div>
+              <span className="font-bold">人數</span> &nbsp;{data?.extendedProperties.shared.crowdSize}
+            </div>
+            <div>
+              <span className="font-bold">起始</span> &nbsp;{data?.start.dateTime}
+            </div>
+            <div>
+              <span className="font-bold">結束</span> &nbsp;{data?.end.dateTime}
+            </div>
+            <div>
+              <span className="font-bold">簡述</span> &nbsp;{data?.extendedProperties.shared.eventDescription}
+            </div>
+          </DialogContentText>
+        </DialogContent>
+      )}
+      <DialogActions>
+        {isEventOwner && (
+          <Button onClick={handleDelete} color="error">
+            刪除事件
+          </Button>
         )}
-        <DialogActions>
-          {isEventOwner && (
-            <Button onClick={handleDelete} color="error">
-              刪除事件
-            </Button>
-          )}
-          <Button onClick={onClose}>關閉</Button>
-        </DialogActions>
-      </Dialog>
-
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={3000}
-        onClose={handleSnackbarClose}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-        sx={{ zIndex: 9999 }} // 確保 Snackbar 在最上層
-      >
-        <Alert onClose={handleSnackbarClose} severity={snackbar.severity} sx={{ width: "100%" }}>
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
-    </>
+        <Button onClick={onClose}>關閉</Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 

@@ -8,12 +8,19 @@ import { useUI } from "../context/UIContext";
 export const GlobalUI = () => {
   const { dialog, hideDialog, snackbar, hideSnackbar } = useUI();
 
+  const handleDialogClose = (_event: React.SyntheticEvent | object, reason?: "backdropClick" | "escapeKeyDown") => {
+    if (!dialog.content) {
+      if (reason === "backdropClick" || reason === "escapeKeyDown") return;
+    }
+    hideDialog(); // 只呼叫沒有參數的版本
+  };
+
   return (
     <>
       {/* Dialog */}
       <Dialog
         open={dialog.open}
-        onClose={hideDialog}
+        onClose={handleDialogClose}
         aria-labelledby="loading-dialog"
         fullWidth
         maxWidth="xs"
