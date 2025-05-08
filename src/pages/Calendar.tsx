@@ -48,6 +48,12 @@ const Calendar: React.FC = () => {
     setOpen(false);
   };
 
+  const handleDeleteSuccess = () => {
+    // 重新獲取當前月份的事件
+    const today = dayjs();
+    fetchEvents(today.year(), today.month() + 1);
+  };
+
   React.useEffect(() => {
     const today = dayjs();
     fetchEvents(today.year(), today.month() + 1);
@@ -128,7 +134,7 @@ const Calendar: React.FC = () => {
               <Reserve onClick={() => handleClickOpen(event)} key={spanningEvents.length + index} event={event} />
             ))}
 
-            <MyDialog open={open} onClose={handleClose} event={selectedEvent || ({} as Event)} />
+            <MyDialog open={open} onClose={handleClose} event={selectedEvent || ({} as Event)} onDeleteSuccess={handleDeleteSuccess} />
           </div>
         )}
       </div>

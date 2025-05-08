@@ -1,5 +1,6 @@
 // 定義事件介面
 export type Event = {
+  id: string;
   start: {
     dateTime: string;
   };

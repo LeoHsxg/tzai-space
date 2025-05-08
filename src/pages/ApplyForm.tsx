@@ -7,7 +7,7 @@ import TextField from "@mui/material/TextField";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 
-import { useAuth } from "../hooks/useAuth"; // 假設這是你的 auth hook
+import { useAuth } from "../hooks/useAuth";
 import { validateData } from "../func/applyFunc";
 import ConsentCheckbox from "../Components/ConsentCheckbox";
 import "../styles/ApplyForm.css";
