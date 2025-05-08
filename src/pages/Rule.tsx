@@ -32,17 +32,17 @@ const Rule = () => {
   ];
 
   return (
-    <div className="w-full">
+    <div className="w-full md:mt-4">
       {/* <div className="rule pb-[5%]">
         {rules.map((text, idx) => (<div key={idx} className="content">
             {text}
           </div>))}
       </div> */}
-      <div className="w-full pb-20 md:max-w-[800px] m-auto md:pb-0 ">
+      <div className="w-full pb-20 md:max-w-[900px] m-auto md:pb-0 ">
         <p
           className="
           -mt-1 mb-3 px-[8%] noto font-bold text-black/80 text-lg
-          md:mt-3 md:pl-4 md:pr-0
+          md:mt-0 md:pl-4 md:pr-0
         ">
           空間借用條例
         </p>

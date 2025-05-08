@@ -11,6 +11,8 @@ const serviceAccount = require("./service_account.json");
 const calendar = google.calendar("v3");
 const TIME_ZONE = "Asia/Taipei";
 
+const CALENDAR_ID = "oa27fmn21hoqd0hvdpg1bqlv1k@group.calendar.google.com";
+
 /**
  * 這個函式負責回傳一個 JWT 物件，用來透過 Service Account 連線到 Google API
  * @returns {google.auth.JWT}
@@ -41,6 +43,7 @@ async function addEvent(event) {
   const ed = new Date(event.checkoutTime);
 
   // 組合要寫進 Google Calendar "description" 的內容
+  // 這段不能拿掉！要不然在 google calendar 就啥都看不到了！
   const desc = [
     `Booked by: ${event.name}`,
     `Contact: ${event.email}`,
@@ -93,7 +96,7 @@ async function addEvent(event) {
   // 直接呼叫 calendar.events.insert 新增事件
   await calendar.events.insert({
     auth,
-    calendarId: "oa27fmn21hoqd0hvdpg1bqlv1k@group.calendar.google.com",
+    calendarId: CALENDAR_ID,
     resource: {
       summary: event.room, // 顯示哪個房間
       description: desc, // 寫入我們組合好的描述
@@ -128,4 +131,47 @@ async function addEvent(event) {
   };
 }
 
-module.exports = { addEvent };
+/**
+ * 刪除事件函式
+ * @param {Object} params
+ * @param {string} params.email     用戶請求時帶入的 email
+ * @param {string} params.eventId   要刪除的事件 ID
+ */
+async function deleteEvent({ email, eventId }) {
+  const auth = getServiceAccountAuth();
+
+  // 1. 先拿到原事件，確認 extendedProperties.shared.email
+  let getResp;
+  try {
+    getResp = await calendar.events.get({
+      auth,
+      calendarId: CALENDAR_ID,
+      eventId,
+      fields: "extendedProperties/shared",
+    });
+  } catch (err) {
+    if (err.code === 404) {
+      throw new Error(`找不到事件: ${eventId}`);
+    }
+    throw new Error(`取得事件失敗：${err.message}`);
+  }
+
+  const ownerEmail = getResp.data.extendedProperties?.shared?.email;
+  if (!ownerEmail) {
+    throw new Error("此為舊版網站建立之事件，請聯繫管理員協助刪除");
+  }
+  if (ownerEmail !== email) {
+    throw new Error("只能刪除自己建立的事件，話說你是怎麼繞過來的");
+  }
+
+  // 2. 呼叫 delete 刪除事件
+  await calendar.events.delete({
+    auth,
+    calendarId: CALENDAR_ID,
+    eventId,
+  });
+
+  return { message: "刪除成功" };
+}
+
+module.exports = { addEvent, deleteEvent };

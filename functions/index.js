@@ -10,7 +10,8 @@ const admin = require("firebase-admin");
 admin.initializeApp();
 
 // 打包的程式碼
-const { addEvent } = require("./src/addEvent");
+const { addEvent } = require("./src/handleEvent");
+const { deleteEvent } = require("./src/handleEvent");
 
 // 一些應該藏起來的酷東西
 const API_KEY = "AIzaSyDGKPnWpC9N15OFlXnRErz7e6URy7vtNi4";
@@ -30,6 +31,31 @@ exports.addEventToCalendar = functions.https.onRequest(async (request, response)
   } catch (err) {
     response.status(500).send({ status: 500, message: err.message });
     console.error(err.message);
+  }
+});
+
+/**
+ * 刪除事件端點
+ *  - Method：POST
+ *  - Body：{ email: string, eventId: string }
+ */
+exports.deleteEventFromCalendar = functions.https.onRequest(async (req, res) => {
+  // 只接受 POST
+  if (req.method !== "POST") {
+    return res.status(405).send("Method Not Allowed");
+  }
+
+  const { email, eventId } = req.body;
+  if (!email || !eventId) {
+    return res.status(400).send("Missing parameters: email and eventId are required.");
+  }
+
+  try {
+    const result = await deleteEvent({ email, eventId });
+    return res.status(200).send(result);
+  } catch (err) {
+    console.error("Error deleting event:", err);
+    return res.status(500).send({ status: 500, message: err.message });
   }
 });
 
@@ -57,6 +83,7 @@ exports.getEventsForMonth = functions.https.onRequest(async (request, response) 
   const timeMax = endOfMonth.toISOString();
   try {
     // 使用 calendar.events.list 來讀取該月的事件 Event List Response"
+    // field 就只會傳回那條子樹下的物件資料，其他不顯示
     const eventListResp = await calendar.events.list({
       key: API_KEY, // 使用 API 金鑰
       calendarId: CALENDAR_ID, // 使用你的 Calendar ID
@@ -65,7 +92,7 @@ exports.getEventsForMonth = functions.https.onRequest(async (request, response) 
       maxResults: 2000,
       singleEvents: true, // 確保不會取得重複的事件
       orderBy: "startTime", // 按時間排序
-      fields: "items(start,end,summary,description,extendedProperties(shared))",
+      fields: "items(id,start,end,summary,description,extendedProperties(shared))",
     });
 
     // 取得事件資料
@@ -89,4 +116,23 @@ exports.getEventsForMonth = functions.https.onRequest(async (request, response) 
 // response.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, PATCH");
 // response.set("Access-Control-Allow-Headers", "Origin, Accept, Content-Type, X-Requested-With");
 // 或是使用 const cors = require("cors")({ origin: "*" });
+
+/**
+ * 等等我好像懂了，cors 應該要這樣設
+ * 所以我上面那些寫法是文法錯了，沒根據 firebase 的格式
+  exports.sayHello = onRequest(
+    { cors: [/firebase\.com$/, "flutter.com"] },
+    (req, res) => {
+      res.status(200).send("Hello world!");
+    }
+  );
+ */
+
+/**
+onCall 內部除了做 CORS 限制外，還檢查：
+* Request header 必須是 Firebase SDK 發出的
+* Payload 要符合特定 JSON 格式
+* 必須帶上有效的 Firebase ID Token
+所以你就算做了 CORS 也還是沒有用，乖乖用 rewrite 弄到同網域下比較實際
+ */
 
