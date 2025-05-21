@@ -109,7 +109,13 @@ const Calendar: React.FC = () => {
         {/* 裝飾文字 */}
         <div className="self-stretch px-2.5 justify-between items-center inline-flex">
           <div className="font">今日預約共 {filteredAmount} 筆</div>
-          <div className="font">預約詳情</div>
+          <a
+            href="https://calendar.google.com/calendar/u/0/embed?src=oa27fmn21hoqd0hvdpg1bqlv1k@group.calendar.google.com&ctz=Asia/Taipei"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font underline">
+            預約詳情
+          </a>
         </div>
 
         {/* 載入中與預約列表 */}
