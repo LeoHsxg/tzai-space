@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { getRegulationsData } from "../firebase/firebase"; // ← 你設定的 firebase 檔案
-import "../styles/Rule.css";
 import Ruleblock from "../Components/Ruleblock"; // ← 你設定的 Ruleblock 檔案
 
 const Rule = () => {

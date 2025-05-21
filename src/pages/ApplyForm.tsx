@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Button, Box, MenuItem, FormControl, Select } from "@mui/material";
-import { Dialog, DialogTitle, DialogContent } from "@mui/material";
-import { CircularProgress, Snackbar, Alert } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import TextField from "@mui/material/TextField";
 import { DateTimePicker } from "@mui/x-date-pickers";
@@ -9,20 +7,15 @@ import dayjs, { Dayjs } from "dayjs";
 
 import { useAuth } from "../hooks/useAuth";
 import { validateData } from "../func/applyFunc";
+import { useUI } from "../context/UIContext";
 import ConsentCheckbox from "../Components/ConsentCheckbox";
 import "../styles/ApplyForm.css";
 
 const FUNCTION_URL = "api/add/";
 
-interface SnackbarState {
-  open: boolean;
-  message: string;
-  severity: "success" | "error" | "info" | "warning"; // green, red, blue, orange
-  // variant: "standard" | "filled" | "outlined";
-}
-
 const ApplyForm: React.FC = () => {
   const user = useAuth(); // 從 context 拿使用者
+  const { showSnackbar, showDialog, hideDialog } = useUI(); // 使用 useUI 來管理 Snackbar
 
   const [startDate, setStartDate] = useState<Dayjs | null>(dayjs());
   const [endDate, setEndDate] = useState<Dayjs | null>(dayjs());
@@ -32,21 +25,6 @@ const ApplyForm: React.FC = () => {
   const [location, setLocation] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [consent, setConsent] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false); // 控制 Dialog
-
-  // 控制 Snackbar
-  const [snackbarState, setSnackbarState] = useState<SnackbarState>({
-    open: false,
-    message: "",
-    severity: "success",
-  });
-  const { open: openSnackbar, message: snackbarMessage, severity: snackbarSeverity } = snackbarState;
-  const handleOpenSnackbar = (message: string, severity: "success" | "error") => {
-    setSnackbarState({ open: true, message, severity });
-  };
-  const handleCloseSnackbar = () => {
-    setSnackbarState({ ...snackbarState, open: false });
-  };
 
   // 處理同意勾選狀態（假設 ConsentCheckbox 支援 checked 與 onChange）
   const handleConsentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,11 +37,11 @@ const ApplyForm: React.FC = () => {
 
     // 基本欄位驗證，確認必填欄位皆有填寫
     if (!applicantName || !phone || !crowdSize || !location || !startDate || !endDate || !description || !consent) {
-      alert("請填寫所有必填欄位，並同意隱私權政策");
+      showSnackbar("請填寫所有必填欄位，並同意隱私權政策", "warning");
       return;
     }
 
-    setLoading(true);
+    showDialog("處理中...");
 
     try {
       if (!user) {
@@ -95,12 +73,12 @@ const ApplyForm: React.FC = () => {
         throw new Error(errorData.message || "Unknown error");
       }
 
-      handleOpenSnackbar("預約成功。", "success");
+      showSnackbar("預約成功。", "success");
       // setSnackbarMessage(result.message);
     } catch (err: unknown) {
-      handleOpenSnackbar((err as Error).message || "請求失敗，請稍後再試。", "error");
+      showSnackbar((err as Error).message || "請求失敗，請稍後再試。", "error");
     } finally {
-      setLoading(false); // 隱藏 Loading Dialog
+      hideDialog();
     }
   };
 
@@ -108,7 +86,6 @@ const ApplyForm: React.FC = () => {
     <div className="mt-[5px] md:my-5 px-[5%] pb-20 md:pb-0 max-w-[640px] mx-auto">
       <Box component="form" onSubmit={handleSubmit} className="gap-5 flex flex-col justify-center items-center">
         <div className="w-full">
-          {/* <input type="text" className="ipt" label="申請人姓名"></input> */}
           <TextField
             className="ipt"
             placeholder="申請人姓名"
@@ -162,39 +139,16 @@ const ApplyForm: React.FC = () => {
           />
         </div>
       </Box>
-      <div className="mt-2 flex flex-col justify-center items-center">
-        <div className="px-2 noto font-normal text-gray-400 text-xs text-center">*建議使用 Google Chrome 等內建瀏覽器開啟，Safari 可能會無法使用</div>
+      <div className="mt-2 flex flex-col justify-center items-center gap-0.5">
+        <div className="px-2 noto font-normal text-gray-400 text-xs text-center leading-relaxed">
+          *建議使用 Chrome 等原生瀏覽器，Safari 可能會阻擋，臉書與 Line 瀏覽器則無法使用
+        </div>
+        {/* <div className="px-2 noto font-normal text-gray-400 text-xs text-center">*已知臉書瀏覽器無法使用</div> */}
         <ConsentCheckbox checked={consent} onChange={handleConsentChange} />
         <Button className="myBtn" type="submit" variant="contained" fullWidth size="large" onClick={handleSubmit}>
           確認送出
         </Button>
       </div>
-
-      {/* 1. MUI Dialog - Loading 彈出視窗 */}
-      <Dialog
-        open={loading}
-        aria-labelledby="loading-dialog"
-        fullWidth
-        maxWidth="sm"
-        sx={{
-          "& .MuiBackdrop-root": {
-            backgroundColor: "rgba(0, 0, 0, 0.8)", // 調整背景顏色，讓它變得更黑
-          },
-        }}>
-        <DialogTitle id="loading-dialog" font-bold font-noto>
-          處理中...
-        </DialogTitle>
-        <DialogContent className="flex flex-col items-center">
-          <CircularProgress />
-        </DialogContent>
-      </Dialog>
-
-      {/* 2. MUI Snackbar - 結果通知 */}
-      <Snackbar anchorOrigin={{ vertical: "top", horizontal: "center" }} open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
-        <Alert severity={snackbarSeverity} variant="filled" onClose={handleCloseSnackbar} sx={{ width: "90%" }}>
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
     </div>
   );
 };

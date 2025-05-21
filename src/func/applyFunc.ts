@@ -12,7 +12,7 @@ export interface RequestBody {
 export async function validateData(event: RequestBody) {
   // 基本資料檢查：電話號碼/人數/姓名/描述的長度或格式
   if (/^\d+$/.exec(event.phone) == null) {
-    throw new Error("Phone number must be an integer!");
+    throw new Error("你打得這是電話號碼嗎...");
   }
   if (event.phone.length != 10) {
     throw new Error("Phone length doesn's match!");
@@ -21,7 +21,7 @@ export async function validateData(event: RequestBody) {
     throw new Error("人數請至少為 1, 老兄你是幽靈嗎?");
   }
   if (/^\d+$/.exec(event.crowdSize) == null) {
-    throw new Error("為什麼人數會有小數啦...");
+    throw new Error("為什麼人數不是整數啦...");
   }
   if (event.name.length > 30) {
     throw new Error("名字太長啦, Ovuvuevuevue enyetuenwuevue ugbemugbem osas");
@@ -42,7 +42,7 @@ export async function validateData(event: RequestBody) {
   }
   // 檢查區間是否正確
   if (st >= ed) {
-    throw new Error("結束時間請大於開始時間, 對時間逆行者致上敬意");
+    throw new Error("結束時間請大於開始時間, 越活越回去齁你");
   }
   const diffInHours = (ed - st) / (1000 * 3600);
   if (diffInHours > 4) {
