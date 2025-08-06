@@ -12,6 +12,7 @@ admin.initializeApp();
 // 打包的程式碼
 const { addEvent } = require("./src/handleEvent");
 const { deleteEvent } = require("./src/handleEvent");
+const { listAllEvents } = require("./src/handleEvent");
 
 // 一些應該藏起來的酷東西
 const API_KEY = "AIzaSyDGKPnWpC9N15OFlXnRErz7e6URy7vtNi4";
@@ -108,6 +109,16 @@ exports.getEventsForMonth = functions.https.onRequest(async (request, response) 
   } catch (err) {
     response.status(500).send({ status: 500, message: err.message });
     console.error("Error fetching events:", err);
+  }
+});
+
+exports.getAllEvents = functions.https.onRequest(async (req, res) => {
+  try {
+    const events = await listAllEvents();
+    return res.status(200).json({ events });
+  } catch (err) {
+    console.error("Error listing all events:", err);
+    return res.status(500).json({ status: 500, message: err.message });
   }
 });
 

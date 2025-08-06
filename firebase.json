@@ -15,6 +15,10 @@
         "function": "addEventToCalendar"
       },
       {
+        "source": "/api/getAll/**",
+        "function": "getAllEvents"
+      },
+      {
         "source": "/api/get",
         "function": "getEventsForMonth"
       },

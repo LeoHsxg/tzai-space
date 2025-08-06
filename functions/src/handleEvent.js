@@ -174,4 +174,28 @@ async function deleteEvent({ email, eventId }) {
   return { message: "刪除成功" };
 }
 
-module.exports = { addEvent, deleteEvent };
+async function listAllEvents() {
+  const auth = getServiceAccountAuth(); // 來自 service account 的 JWT :contentReference[oaicite:0]{index=0}
+  let events = [];
+  let nextPageToken = null;
+
+  do {
+    const resp = await calendar.events.list({
+      auth,
+      calendarId: CALENDAR_ID,
+      singleEvents: true, // 拆開重複事件
+      orderBy: "startTime", // 依開始時間排序
+      timeMin: new Date(0).toISOString(), // 從 1970 年開始，確保拿到所有過去／未來事件
+      maxResults: 2500, // 單頁最多 2500 筆
+      pageToken: nextPageToken, // 分頁用
+      fields: "items(id,start,end,summary,description,extendedProperties(shared))",
+    });
+    const items = resp.data.items || [];
+    events = events.concat(items);
+    nextPageToken = resp.data.nextPageToken;
+  } while (nextPageToken);
+
+  return events;
+}
+
+module.exports = { addEvent, deleteEvent, listAllEvents };

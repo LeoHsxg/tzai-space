@@ -115,7 +115,7 @@ const ApplyForm: React.FC = () => {
               <MenuItem value={"書房"}>書房</MenuItem>
               <MenuItem value={"橘廳"}>橘廳</MenuItem>
               <MenuItem value={"會議室"}>會議室</MenuItem>
-              {/* <MenuItem value={"貢丸室"}>貢丸室</MenuItem> */}
+              <MenuItem value={"貢丸室"}>貢丸室</MenuItem>
             </Select>
           </FormControl>
         </div>
